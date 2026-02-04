@@ -156,6 +156,7 @@ export default function Menu() {
   const [orderPromptDismissed, setOrderPromptDismissed] = useState(false)
   const showPrompt = showOrderPrompt && !orderPromptDismissed
   const [activeId, setActiveId] = useState(menuSections[0].id)
+  const [highlightedId, setHighlightedId] = useState(null)
   const panelRefs = useRef({})
 
   useEffect(() => {
@@ -166,10 +167,16 @@ export default function Menu() {
     if (!activeId) return
     const el = panelRefs.current[activeId]
     if (!el) return
-    const timer = requestAnimationFrame(() => {
+    let timeoutId
+    const frameId = requestAnimationFrame(() => {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setHighlightedId(activeId)
+      timeoutId = setTimeout(() => setHighlightedId(null), 650)
     })
-    return () => cancelAnimationFrame(timer)
+    return () => {
+      cancelAnimationFrame(frameId)
+      if (timeoutId) clearTimeout(timeoutId)
+    }
   }, [activeId])
 
   return (
@@ -216,7 +223,7 @@ export default function Menu() {
             id={`menu-panel-${section.id}`}
             role="region"
             aria-labelledby={`menu-tab-${section.id}`}
-            className={`menu-panel menu-panel--${section.id} ${activeId === section.id ? 'menu-panel--open' : ''}`}
+            className={`menu-panel menu-panel--${section.id} ${activeId === section.id ? 'menu-panel--open' : ''} ${highlightedId === section.id ? 'menu-panel--highlighted' : ''}`}
             hidden={activeId !== section.id}
           >
             <div className="menu-panel__inner">
