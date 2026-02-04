@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <header>
+    <header className="site-header" aria-label="Site navigation">
       <nav>
         <Link to="/">Binger Drive Thru</Link>
         <ul>
