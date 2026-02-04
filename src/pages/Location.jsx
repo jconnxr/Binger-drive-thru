@@ -1,3 +1,5 @@
+import DirectionsCTA from '../components/DirectionsCTA'
+
 export default function Location() {
   return (
     <div className="location-page">
@@ -39,9 +41,7 @@ export default function Location() {
           />
         </div>
         <p className="location-page__map-link">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=121+E+Main+St,+Binger,+OK+73009" target="_blank" rel="noopener noreferrer">
-            Get directions in Google Maps
-          </a>
+          <DirectionsCTA className="location-page__map-cta" buttonText="Get directions" />
         </p>
       </section>
     </div>

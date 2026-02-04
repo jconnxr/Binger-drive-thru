@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import buildingFront from '../assets/buildingfront.jpg'
+import DirectionsCTA from '../components/DirectionsCTA'
 
 export default function Home() {
   return (
@@ -19,18 +20,9 @@ export default function Home() {
           <p className="hero__subtitle">Family-owned drive-thru food & convenience store</p>
           <p className="hero__location">Located on Highway 152 in Binger, Oklahoma</p>
           <div className="hero__actions">
-            <Link to="/menu" className="hero__btn hero__btn--primary">View Menu</Link>
-            <a
-              href="https://www.google.com/maps/dir/?api=1&destination=121+E+Main+St,+Binger,+OK+73009"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero__btn hero__btn--secondary"
-            >
-              Get Directions
-            </a>
-            <Link to="/menu" state={{ showOrderPrompt: true }} className="hero__btn hero__btn--secondary">
-              Place Order
-            </Link>
+            <a href="tel:+14056562726" className="hero__btn hero__btn--primary">Place Order</a>
+            <Link to="/menu" state={{ showOrderPrompt: true }} className="hero__btn hero__btn--secondary">View Menu</Link>
+            <DirectionsCTA className="hero__btn hero__btn--tertiary" buttonText="Get Directions" />
           </div>
         </div>
       </section>

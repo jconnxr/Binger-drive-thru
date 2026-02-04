@@ -168,9 +168,9 @@ export default function Menu() {
       {showPrompt && (
         <div className="menu-order-prompt" role="region" aria-labelledby="order-prompt-heading">
           <div className="menu-order-prompt__inner">
-            <h2 id="order-prompt-heading" className="menu-order-prompt__title">Place your order by phone</h2>
-            <p className="menu-order-prompt__text">Call us to place an order or ask about the menu.</p>
-            <a href={`tel:+1${PHONE_NUMBER}`} className="menu-order-prompt__btn">Call {PHONE_DISPLAY}</a>
+            <h2 id="order-prompt-heading" className="menu-order-prompt__title">Call to place an order</h2>
+            <p className="menu-order-prompt__text">Ready when you are. Call us to place your order or ask about the menu.</p>
+            <a href={`tel:+1${PHONE_NUMBER}`} className="menu-order-prompt__btn">Call Now</a>
             <button type="button" className="menu-order-prompt__dismiss" onClick={() => setOrderPromptDismissed(true)} aria-label="Dismiss">×</button>
           </div>
         </div>
@@ -186,7 +186,7 @@ export default function Menu() {
             <li key={section.id}>
               <button
                 type="button"
-                className={`menu-nav__btn ${activeId === section.id ? 'menu-nav__btn--active' : ''}`}
+                className={`menu-nav__btn menu-nav__btn--${section.id} ${activeId === section.id ? 'menu-nav__btn--active' : ''}`}
                 onClick={() => setActiveId(section.id)}
                 aria-expanded={activeId === section.id}
                 aria-controls={`menu-panel-${section.id}`}
@@ -206,11 +206,14 @@ export default function Menu() {
             id={`menu-panel-${section.id}`}
             role="region"
             aria-labelledby={`menu-tab-${section.id}`}
-            className={`menu-panel ${activeId === section.id ? 'menu-panel--open' : ''}`}
+            className={`menu-panel menu-panel--${section.id} ${activeId === section.id ? 'menu-panel--open' : ''}`}
             hidden={activeId !== section.id}
           >
             <div className="menu-panel__inner">
-              <h2 className="menu-panel__title">{section.name}</h2>
+              <h2 className="menu-panel__title">
+                <span className="menu-panel__marker" aria-hidden="true" />
+                {section.name}
+              </h2>
               <SectionContent section={section} />
             </div>
           </div>
