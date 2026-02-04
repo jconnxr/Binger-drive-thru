@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { menuSections } from '../data/menu'
 import chickenBasketImg from '../assets/Chickenbasket.jpg'
@@ -156,12 +156,21 @@ export default function Menu() {
   const [orderPromptDismissed, setOrderPromptDismissed] = useState(false)
   const showPrompt = showOrderPrompt && !orderPromptDismissed
   const [activeId, setActiveId] = useState(menuSections[0].id)
+  const panelRefs = useRef({})
 
   useEffect(() => {
     if (showOrderPrompt) setOrderPromptDismissed(false)
   }, [showOrderPrompt])
 
-  const activeSection = menuSections.find((s) => s.id === activeId)
+  useEffect(() => {
+    if (!activeId) return
+    const el = panelRefs.current[activeId]
+    if (!el) return
+    const timer = requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+    return () => cancelAnimationFrame(timer)
+  }, [activeId])
 
   return (
     <div className="menu-page">
@@ -203,6 +212,7 @@ export default function Menu() {
         {menuSections.map((section) => (
           <div
             key={section.id}
+            ref={(el) => { if (el) panelRefs.current[section.id] = el }}
             id={`menu-panel-${section.id}`}
             role="region"
             aria-labelledby={`menu-tab-${section.id}`}
