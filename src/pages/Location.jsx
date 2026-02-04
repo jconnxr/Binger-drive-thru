@@ -1,0 +1,38 @@
+export default function Location() {
+  return (
+    <div className="location-page">
+      <header className="location-page__header">
+        <h1 className="location-page__title">Location</h1>
+        <p className="location-page__tagline">
+          On Highway 152 in Binger, Oklahoma. Easy in, easy out.
+        </p>
+      </header>
+      <section className="location-page__address" aria-labelledby="address-heading">
+        <h2 id="address-heading">Address</h2>
+        <p className="location-page__address-text">
+          121 E Main St<br />
+          Binger, OK 73009
+        </p>
+        <p className="location-page__phone">
+          <a href="tel:+14056562726">(405) 656-2726</a>
+        </p>
+        <p className="location-page__highway">
+          Located on <strong>Highway 152</strong>—a convenient stop for locals and through traffic.
+        </p>
+      </section>
+      <section className="location-page__drive-thru" aria-labelledby="drive-thru-heading">
+        <h2 id="drive-thru-heading">Drive-Thru</h2>
+        <p className="location-page__drive-thru-text">
+          We are a drive-thru. Pull up for hot food, pizza, drinks, and
+          convenience items without leaving your vehicle.
+        </p>
+      </section>
+      <section className="location-page__map" aria-labelledby="map-heading">
+        <h2 id="map-heading">Map</h2>
+        <div className="location-page__map-placeholder" aria-hidden="true">
+          Map embed placeholder
+        </div>
+      </section>
+    </div>
+  )
+}
