@@ -1,8 +1,19 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import buildingFront from '../assets/buildingfront.jpg'
 import DirectionsCTA from '../components/DirectionsCTA'
+import { businessHours } from '../data/hours'
+
+const todayName = () => new Date().toLocaleDateString('en-US', { weekday: 'long' })
+
+function isToday(dayLabel) {
+  const today = todayName()
+  if (!dayLabel) return false
+  return dayLabel === today || dayLabel.startsWith(`${today} –`) || dayLabel.endsWith(`– ${today}`) || dayLabel.includes(`– ${today} –`)
+}
 
 export default function Home() {
+  const [hoursOpen, setHoursOpen] = useState(false)
   return (
     <>
       <section className="hero" aria-label="Binger Drive Thru storefront">
@@ -23,6 +34,45 @@ export default function Home() {
             <a href="tel:+14056562726" className="hero__btn hero__btn--primary">Place Order</a>
             <Link to="/menu" state={{ showOrderPrompt: true }} className="hero__btn hero__btn--secondary">View Menu</Link>
             <DirectionsCTA className="hero__btn hero__btn--tertiary" buttonText="Get Directions" />
+          </div>
+        </div>
+      </section>
+      <section className="hours" aria-labelledby="hours-heading">
+        <button
+          type="button"
+          id="hours-heading"
+          className="hours__toggle"
+          onClick={() => setHoursOpen((open) => !open)}
+          aria-expanded={hoursOpen}
+          aria-controls="hours-content"
+        >
+          <span className="hours__toggle-text">Hours</span>
+          <span className="hours__toggle-icon" aria-hidden="true">{hoursOpen ? '▲' : '▼'}</span>
+        </button>
+        <div
+          id="hours-content"
+          className={`hours__dropdown ${hoursOpen ? 'hours__dropdown--open' : ''}`}
+          hidden={!hoursOpen}
+        >
+          <div className="hours__card">
+            <dl className="hours__list">
+              {businessHours.map((row, i) => (
+                <div
+                  key={i}
+                  className={`hours__row ${isToday(row.day) ? 'hours__row--today' : ''}`}
+                >
+                  <dt className="hours__day">{row.day}</dt>
+                  <dd className="hours__time">
+                    {row.time.includes('656-2726') ? (
+                      <a href="tel:+14056562726">{row.time}</a>
+                    ) : (
+                      row.time
+                    )}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="hours__note">Hours may vary on holidays. Call if you have questions.</p>
           </div>
         </div>
       </section>
