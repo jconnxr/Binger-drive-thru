@@ -29,9 +29,20 @@ export default function Location() {
       </section>
       <section className="location-page__map" aria-labelledby="map-heading">
         <h2 id="map-heading">Map</h2>
-        <div className="location-page__map-placeholder" aria-hidden="true">
-          Map embed placeholder
+        <div className="location-page__map-wrap">
+          <iframe
+            src="https://www.google.com/maps?q=121+E+Main+St,+Binger,+OK+73009&z=15&output=embed"
+            title="Map showing Binger Drive Thru at 121 E Main St, Binger, OK 73009"
+            className="location-page__map-iframe"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
+        <p className="location-page__map-link">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=121+E+Main+St,+Binger,+OK+73009" target="_blank" rel="noopener noreferrer">
+            Get directions in Google Maps
+          </a>
+        </p>
       </section>
     </div>
   )
