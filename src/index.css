@@ -826,6 +826,14 @@ footer {
   gap: var(--space-block);
 }
 
+.menu-panels__placeholder {
+  margin: 0;
+  padding: var(--space-card);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-body);
+}
+
 .menu-panel {
   scroll-margin-top: 6rem;
 }

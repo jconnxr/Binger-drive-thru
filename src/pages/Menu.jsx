@@ -155,12 +155,16 @@ export default function Menu() {
   const showOrderPrompt = location.state?.showOrderPrompt === true
   const [orderPromptDismissed, setOrderPromptDismissed] = useState(false)
   const showPrompt = showOrderPrompt && !orderPromptDismissed
-  const [activeId, setActiveId] = useState(menuSections[0].id)
+  const [activeId, setActiveId] = useState(showOrderPrompt ? null : menuSections[0].id)
   const [highlightedId, setHighlightedId] = useState(null)
   const panelRefs = useRef({})
 
   useEffect(() => {
     if (showOrderPrompt) setOrderPromptDismissed(false)
+  }, [showOrderPrompt])
+
+  useEffect(() => {
+    if (showOrderPrompt) window.scrollTo(0, 0)
   }, [showOrderPrompt])
 
   useEffect(() => {
@@ -216,25 +220,29 @@ export default function Menu() {
       </nav>
 
       <div className="menu-panels">
-        {menuSections.map((section) => (
-          <div
-            key={section.id}
-            ref={(el) => { if (el) panelRefs.current[section.id] = el }}
-            id={`menu-panel-${section.id}`}
-            role="region"
-            aria-labelledby={`menu-tab-${section.id}`}
-            className={`menu-panel menu-panel--${section.id} ${activeId === section.id ? 'menu-panel--open' : ''} ${highlightedId === section.id ? 'menu-panel--highlighted' : ''}`}
-            hidden={activeId !== section.id}
-          >
-            <div className="menu-panel__inner">
-              <h2 className="menu-panel__title">
-                <span className="menu-panel__marker" aria-hidden="true" />
-                {section.name}
-              </h2>
-              <SectionContent section={section} />
+        {activeId == null ? (
+          <p className="menu-panels__placeholder">Select a category above to view the menu.</p>
+        ) : (
+          menuSections.map((section) => (
+            <div
+              key={section.id}
+              ref={(el) => { if (el) panelRefs.current[section.id] = el }}
+              id={`menu-panel-${section.id}`}
+              role="region"
+              aria-labelledby={`menu-tab-${section.id}`}
+              className={`menu-panel menu-panel--${section.id} ${activeId === section.id ? 'menu-panel--open' : ''} ${highlightedId === section.id ? 'menu-panel--highlighted' : ''}`}
+              hidden={activeId !== section.id}
+            >
+              <div className="menu-panel__inner">
+                <h2 className="menu-panel__title">
+                  <span className="menu-panel__marker" aria-hidden="true" />
+                  {section.name}
+                </h2>
+                <SectionContent section={section} />
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   )
