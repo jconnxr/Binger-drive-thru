@@ -12,8 +12,19 @@ function isToday(dayLabel) {
   return dayLabel === today || dayLabel.startsWith(`${today} –`) || dayLabel.endsWith(`– ${today}`) || dayLabel.includes(`– ${today} –`)
 }
 
+/** Open 9 AM, close 9 PM Sun–Thu / 10 PM Fri–Sat (local time). */
+function getOpenStatus() {
+  const now = new Date()
+  const day = now.getDay() // 0 Sun .. 6 Sat
+  const minutesSinceMidnight = now.getHours() * 60 + now.getMinutes()
+  const openAt = 9 * 60 // 9 AM
+  const closeAt = (day === 5 || day === 6) ? 22 * 60 : 21 * 60 // Fri/Sat 10 PM, else 9 PM
+  return minutesSinceMidnight >= openAt && minutesSinceMidnight < closeAt
+}
+
 export default function Home() {
   const [hoursOpen, setHoursOpen] = useState(false)
+  const isOpen = getOpenStatus()
   return (
     <>
       <section className="hero" aria-label="Binger Drive Thru storefront">
@@ -47,6 +58,9 @@ export default function Home() {
           aria-controls="hours-content"
         >
           <span className="hours__toggle-text">Hours</span>
+          <span className={`hours__status hours__status--${isOpen ? 'open' : 'closed'}`} aria-live="polite">
+            {isOpen ? 'Open Now' : 'Closed'}
+          </span>
           <span className="hours__toggle-icon" aria-hidden="true">{hoursOpen ? '▲' : '▼'}</span>
         </button>
         <div

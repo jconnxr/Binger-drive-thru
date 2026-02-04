@@ -9,6 +9,7 @@ export default function Footer() {
           <a href="tel:+14056562726" className="footer__phone">(405) 656-2726</a>
         </div>
         <p className="footer__highway">Highway 152 · Online ordering coming soon.</p>
+        <p className="footer__hours">Sun–Thurs: 9 AM – 9 PM · Fri–Sat: 9 AM – 10 PM</p>
         <p className="footer__tagline">Family-owned. Here for Binger and the road.</p>
       </div>
     </footer>
